@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public record UsuarioRequest(
         @NotBlank(message = "Nome e obrigatorio.")
@@ -13,12 +14,21 @@ public record UsuarioRequest(
         @Email(message = "Email invalido.")
         @NotBlank(message = "Email e obrigatorio.")
         String email,
+        @NotBlank(message = "Username e obrigatorio.")
+        String username,
         @NotBlank(message = "Senha e obrigatoria.")
         String senha,
+        String telefone,
+        String bio,
+        String fotoPerfilUrl,
         BigDecimal pesoAtual,
         BigDecimal altura,
         @NotNull(message = "Objetivo e obrigatorio.")
         Objetivo objetivo,
+        LocalDate dataNascimento,
+        String cidade,
+        String estado,
+        Boolean perfilPrivado,
         Boolean ativo
 ) {
 }

@@ -92,6 +92,10 @@ public class RegistroTreinoService {
         return toResponse(buscarEntidade(id));
     }
 
+    public RegistroTreino buscarEntidadeInterna(Long id) {
+        return buscarEntidade(id);
+    }
+
     private RegistroTreino buscarEntidade(Long id) {
         return registroTreinoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Registro de treino nao encontrado."));

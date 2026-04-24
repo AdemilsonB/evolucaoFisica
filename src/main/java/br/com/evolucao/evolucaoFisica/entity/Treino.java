@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,6 +30,9 @@ public class Treino extends AuditableEntity {
     @Column(length = 500)
     private String descricao;
 
+    @Column(length = 500)
+    private String observacoes;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_treino", nullable = false, length = 20)
     private TipoTreino tipoTreino;
@@ -36,6 +40,19 @@ public class Treino extends AuditableEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dia_semana", length = 20)
+    private DayOfWeek diaSemana;
+
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = Boolean.TRUE;
+
+    @Column(name = "publico", nullable = false)
+    private Boolean publico = Boolean.FALSE;
+
+    @Column(name = "recorrente", nullable = false)
+    private Boolean recorrente = Boolean.TRUE;
 
     @Column(name = "data_treino", nullable = false)
     private LocalDateTime dataTreino;
@@ -64,6 +81,14 @@ public class Treino extends AuditableEntity {
         this.descricao = descricao;
     }
 
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
     public TipoTreino getTipoTreino() {
         return tipoTreino;
     }
@@ -78,6 +103,38 @@ public class Treino extends AuditableEntity {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public DayOfWeek getDiaSemana() {
+        return diaSemana;
+    }
+
+    public void setDiaSemana(DayOfWeek diaSemana) {
+        this.diaSemana = diaSemana;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Boolean getPublico() {
+        return publico;
+    }
+
+    public void setPublico(Boolean publico) {
+        this.publico = publico;
+    }
+
+    public Boolean getRecorrente() {
+        return recorrente;
+    }
+
+    public void setRecorrente(Boolean recorrente) {
+        this.recorrente = recorrente;
     }
 
     public LocalDateTime getDataTreino() {

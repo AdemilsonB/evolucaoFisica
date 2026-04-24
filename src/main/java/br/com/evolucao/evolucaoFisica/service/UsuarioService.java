@@ -28,6 +28,9 @@ public class UsuarioService {
         if (usuarioRepository.existsByEmail(request.email())) {
             throw new BusinessException("Ja existe usuario cadastrado com este email.");
         }
+        if (usuarioRepository.existsByUsername(request.username())) {
+            throw new BusinessException("Ja existe usuario cadastrado com este username.");
+        }
 
         Usuario usuario = new Usuario();
         preencherUsuario(usuario, request);
@@ -51,6 +54,9 @@ public class UsuarioService {
         if (!usuario.getEmail().equals(request.email()) && usuarioRepository.existsByEmail(request.email())) {
             throw new BusinessException("Ja existe usuario cadastrado com este email.");
         }
+        if (!usuario.getUsername().equals(request.username()) && usuarioRepository.existsByUsername(request.username())) {
+            throw new BusinessException("Ja existe usuario cadastrado com este username.");
+        }
 
         preencherUsuario(usuario, request);
         return toResponse(usuarioRepository.save(usuario));
@@ -71,10 +77,18 @@ public class UsuarioService {
     private void preencherUsuario(Usuario usuario, UsuarioRequest request) {
         usuario.setNome(request.nome());
         usuario.setEmail(request.email());
+        usuario.setUsername(request.username());
         usuario.setSenha(request.senha());
+        usuario.setTelefone(request.telefone());
+        usuario.setBio(request.bio());
+        usuario.setFotoPerfilUrl(request.fotoPerfilUrl());
         usuario.setPesoAtual(request.pesoAtual());
         usuario.setAltura(request.altura());
         usuario.setObjetivo(request.objetivo());
+        usuario.setDataNascimento(request.dataNascimento());
+        usuario.setCidade(request.cidade());
+        usuario.setEstado(request.estado());
+        usuario.setPerfilPrivado(request.perfilPrivado() == null ? Boolean.FALSE : request.perfilPrivado());
         usuario.setAtivo(request.ativo() == null ? Boolean.TRUE : request.ativo());
     }
 
@@ -83,9 +97,17 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
+                usuario.getUsername(),
+                usuario.getTelefone(),
+                usuario.getBio(),
+                usuario.getFotoPerfilUrl(),
                 usuario.getPesoAtual(),
                 usuario.getAltura(),
                 usuario.getObjetivo(),
+                usuario.getDataNascimento(),
+                usuario.getCidade(),
+                usuario.getEstado(),
+                usuario.getPerfilPrivado(),
                 usuario.getAtivo(),
                 usuario.getDataCriacao()
         );

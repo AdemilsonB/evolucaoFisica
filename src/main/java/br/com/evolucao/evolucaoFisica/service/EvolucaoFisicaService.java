@@ -40,6 +40,10 @@ public class EvolucaoFisicaService {
         return toResponse(buscarEntidade(id));
     }
 
+    public EvolucaoFisica buscarEntidadeInterna(Long id) {
+        return buscarEntidade(id);
+    }
+
     @Transactional
     public EvolucaoFisicaResponse atualizar(Long id, EvolucaoFisicaRequest request) {
         EvolucaoFisica evolucaoFisica = buscarEntidade(id);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,16 @@ public class TreinoController {
         return treinoService.listarPorUsuario(usuarioId);
     }
 
+    @GetMapping("/agenda-semanal")
+    public List<TreinoResponse> listarAgendaSemanal(@RequestParam Long usuarioId) {
+        return treinoService.listarAgendaSemanal(usuarioId);
+    }
+
+    @GetMapping("/agenda-dia")
+    public List<TreinoResponse> listarPorDia(@RequestParam Long usuarioId, @RequestParam DayOfWeek diaSemana) {
+        return treinoService.listarPorDiaSemana(usuarioId, diaSemana);
+    }
+
     @GetMapping("/{id}")
     public TreinoResponse buscarPorId(@PathVariable Long id) {
         return treinoService.buscarPorId(id);
@@ -58,6 +69,12 @@ public class TreinoController {
             @Valid @RequestBody TreinoExercicioRequest request
     ) {
         return treinoService.adicionarExercicio(id, request);
+    }
+
+    @DeleteMapping("/{id}/exercicios/{treinoExercicioId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removerExercicio(@PathVariable Long id, @PathVariable Long treinoExercicioId) {
+        treinoService.removerExercicio(id, treinoExercicioId);
     }
 
     @DeleteMapping("/{id}")

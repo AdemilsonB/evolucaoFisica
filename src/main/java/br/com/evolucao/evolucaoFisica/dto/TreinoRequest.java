@@ -4,16 +4,22 @@ import br.com.evolucao.evolucaoFisica.enumeration.TipoTreino;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public record TreinoRequest(
         @NotBlank(message = "Nome do treino e obrigatorio.")
         String nome,
         String descricao,
+        String observacoes,
         @NotNull(message = "Tipo do treino e obrigatorio.")
         TipoTreino tipoTreino,
         @NotNull(message = "Usuario e obrigatorio.")
         Long usuarioId,
+        DayOfWeek diaSemana,
+        Boolean ativo,
+        Boolean publico,
+        Boolean recorrente,
         @NotNull(message = "Data do treino e obrigatoria.")
         LocalDateTime dataTreino
 ) {

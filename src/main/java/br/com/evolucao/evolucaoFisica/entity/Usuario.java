@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,8 +28,20 @@ public class Usuario extends AuditableEntity {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+
     @Column(nullable = false, length = 255)
     private String senha;
+
+    @Column(length = 20)
+    private String telefone;
+
+    @Column(length = 500)
+    private String bio;
+
+    @Column(name = "foto_perfil_url", length = 500)
+    private String fotoPerfilUrl;
 
     @Column(name = "peso_atual", precision = 10, scale = 2)
     private BigDecimal pesoAtual;
@@ -39,6 +52,18 @@ public class Usuario extends AuditableEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private Objetivo objetivo;
+
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
+
+    @Column(length = 100)
+    private String cidade;
+
+    @Column(length = 100)
+    private String estado;
+
+    @Column(name = "perfil_privado", nullable = false)
+    private Boolean perfilPrivado = Boolean.FALSE;
 
     @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -70,12 +95,44 @@ public class Usuario extends AuditableEntity {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getFotoPerfilUrl() {
+        return fotoPerfilUrl;
+    }
+
+    public void setFotoPerfilUrl(String fotoPerfilUrl) {
+        this.fotoPerfilUrl = fotoPerfilUrl;
     }
 
     public BigDecimal getPesoAtual() {
@@ -100,6 +157,38 @@ public class Usuario extends AuditableEntity {
 
     public void setObjetivo(Objetivo objetivo) {
         this.objetivo = objetivo;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getPerfilPrivado() {
+        return perfilPrivado;
+    }
+
+    public void setPerfilPrivado(Boolean perfilPrivado) {
+        this.perfilPrivado = perfilPrivado;
     }
 
     public LocalDateTime getDataCriacao() {
