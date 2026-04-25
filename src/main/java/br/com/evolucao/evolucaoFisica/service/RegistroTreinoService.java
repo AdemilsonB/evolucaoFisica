@@ -12,6 +12,8 @@ import br.com.evolucao.evolucaoFisica.exception.ResourceNotFoundException;
 import br.com.evolucao.evolucaoFisica.repository.ExercicioRepository;
 import br.com.evolucao.evolucaoFisica.repository.RegistroExercicioRepository;
 import br.com.evolucao.evolucaoFisica.repository.RegistroTreinoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,24 +24,29 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class RegistroTreinoService {
 
+    private static final Logger log = LoggerFactory.getLogger(RegistroTreinoService.class);
+
     private final RegistroTreinoRepository registroTreinoRepository;
     private final RegistroExercicioRepository registroExercicioRepository;
     private final ExercicioRepository exercicioRepository;
     private final UsuarioService usuarioService;
     private final TreinoService treinoService;
+    private final GamificacaoService gamificacaoService;
 
     public RegistroTreinoService(
             RegistroTreinoRepository registroTreinoRepository,
             RegistroExercicioRepository registroExercicioRepository,
             ExercicioRepository exercicioRepository,
             UsuarioService usuarioService,
-            TreinoService treinoService
+            TreinoService treinoService,
+            GamificacaoService gamificacaoService
     ) {
         this.registroTreinoRepository = registroTreinoRepository;
         this.registroExercicioRepository = registroExercicioRepository;
         this.exercicioRepository = exercicioRepository;
         this.usuarioService = usuarioService;
         this.treinoService = treinoService;
+        this.gamificacaoService = gamificacaoService;
     }
 
     @Transactional
@@ -51,7 +58,9 @@ public class RegistroTreinoService {
         registro.setObservacao(request.observacao());
         registro.setConcluido(false);
 
-        return toResponse(registroTreinoRepository.save(registro));
+        RegistroTreino salvo = registroTreinoRepository.save(registro);
+        log.info("Treino iniciado para usuarioId={} registroTreinoId={}", request.usuarioId(), salvo.getId());
+        return toResponse(salvo);
     }
 
     @Transactional
@@ -67,17 +76,26 @@ public class RegistroTreinoService {
         registroExercicio.setRepeticoesReal(request.repeticoesReal());
         registroExercicio.setConcluido(request.concluido());
 
-        return toResponse(registroExercicioRepository.save(registroExercicio));
+        RegistroExercicio salvo = registroExercicioRepository.save(registroExercicio);
+        log.info("Execucao registrada para registroTreinoId={} exercicioId={}", registroTreinoId, request.exercicioId());
+        return toResponse(salvo);
     }
 
     @Transactional
     public RegistroTreinoResponse finalizarTreino(Long id, FinalizacaoRegistroTreinoRequest request) {
         RegistroTreino registro = buscarEntidade(id);
+        if (registro.isConcluido()) {
+            log.warn("Tentativa de finalizar treino ja concluido registroTreinoId={}", id);
+            return toResponse(registro);
+        }
         registro.setFinalizadoEm(request.finalizadoEm());
         registro.setObservacao(request.observacao());
+        registro.setMotivacao(request.motivacao());
         registro.setConcluido(true);
-
-        return toResponse(registroTreinoRepository.save(registro));
+        RegistroTreino salvo = registroTreinoRepository.save(registro);
+        gamificacaoService.processarTreinoConcluido(salvo);
+        log.info("Treino finalizado para usuarioId={} registroTreinoId={}", salvo.getUsuario().getId(), salvo.getId());
+        return toResponse(salvo);
     }
 
     public List<RegistroTreinoResponse> listar(Long usuarioId, LocalDateTime dataInicio, LocalDateTime dataFim) {
@@ -115,6 +133,7 @@ public class RegistroTreinoService {
                 registro.getDataRegistro(),
                 registro.getFinalizadoEm(),
                 registro.getObservacao(),
+                registro.getMotivacao(),
                 registro.isConcluido(),
                 execucoes
         );

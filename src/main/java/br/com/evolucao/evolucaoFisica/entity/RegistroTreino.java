@@ -1,7 +1,10 @@
 package br.com.evolucao.evolucaoFisica.entity;
 
+import br.com.evolucao.evolucaoFisica.enumeration.MotivacaoRegistro;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +39,10 @@ public class RegistroTreino extends AuditableEntity {
 
     @Column(length = 500)
     private String observacao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private MotivacaoRegistro motivacao;
 
     @Column(nullable = false)
     private boolean concluido;
@@ -86,6 +93,14 @@ public class RegistroTreino extends AuditableEntity {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public MotivacaoRegistro getMotivacao() {
+        return motivacao;
+    }
+
+    public void setMotivacao(MotivacaoRegistro motivacao) {
+        this.motivacao = motivacao;
     }
 
     public boolean isConcluido() {

@@ -1,6 +1,7 @@
 package br.com.evolucao.evolucaoFisica.entity;
 
 import br.com.evolucao.evolucaoFisica.enumeration.Objetivo;
+import br.com.evolucao.evolucaoFisica.enumeration.RoleSistema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -64,6 +65,10 @@ public class Usuario extends AuditableEntity {
 
     @Column(name = "perfil_privado", nullable = false)
     private Boolean perfilPrivado = Boolean.FALSE;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_sistema", nullable = false, length = 20)
+    private RoleSistema roleSistema = RoleSistema.USUARIO;
 
     @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -189,6 +194,14 @@ public class Usuario extends AuditableEntity {
 
     public void setPerfilPrivado(Boolean perfilPrivado) {
         this.perfilPrivado = perfilPrivado;
+    }
+
+    public RoleSistema getRoleSistema() {
+        return roleSistema;
+    }
+
+    public void setRoleSistema(RoleSistema roleSistema) {
+        this.roleSistema = roleSistema;
     }
 
     public LocalDateTime getDataCriacao() {

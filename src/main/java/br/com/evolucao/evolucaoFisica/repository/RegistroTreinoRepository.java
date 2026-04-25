@@ -12,4 +12,12 @@ public interface RegistroTreinoRepository extends JpaRepository<RegistroTreino, 
             LocalDateTime dataInicio,
             LocalDateTime dataFim
     );
+
+    List<RegistroTreino> findAllByUsuarioIdAndConcluidoTrueOrderByDataRegistroAsc(Long usuarioId);
+
+    List<RegistroTreino> findAllByUsuarioIdAndConcluidoTrueAndDataRegistroBetweenOrderByDataRegistroAsc(
+            Long usuarioId,
+            LocalDateTime dataInicio,
+            LocalDateTime dataFim
+    );
 }
