@@ -1,5 +1,6 @@
 package br.com.evolucao.evolucaoFisica.entity;
 
+import br.com.evolucao.evolucaoFisica.enumeration.NivelExperiencia;
 import br.com.evolucao.evolucaoFisica.enumeration.Objetivo;
 import br.com.evolucao.evolucaoFisica.enumeration.RoleSistema;
 import jakarta.persistence.Column;
@@ -32,7 +33,7 @@ public class Usuario extends AuditableEntity {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String senha;
 
     @Column(length = 20)
@@ -51,8 +52,12 @@ public class Usuario extends AuditableEntity {
     private BigDecimal altura;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private Objetivo objetivo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nivel_experiencia", length = 20)
+    private NivelExperiencia nivelExperiencia;
 
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
@@ -66,6 +71,9 @@ public class Usuario extends AuditableEntity {
     @Column(name = "perfil_privado", nullable = false)
     private Boolean perfilPrivado = Boolean.FALSE;
 
+    @Column(name = "onboarding_concluido", nullable = false)
+    private Boolean onboardingConcluido = Boolean.FALSE;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role_sistema", nullable = false, length = 20)
     private RoleSistema roleSistema = RoleSistema.USUARIO;
@@ -75,6 +83,9 @@ public class Usuario extends AuditableEntity {
 
     @Column(nullable = false)
     private Boolean ativo = Boolean.TRUE;
+
+    @Column(name = "ultimo_login_em")
+    private LocalDateTime ultimoLoginEm;
 
     public Long getId() {
         return id;
@@ -164,6 +175,14 @@ public class Usuario extends AuditableEntity {
         this.objetivo = objetivo;
     }
 
+    public NivelExperiencia getNivelExperiencia() {
+        return nivelExperiencia;
+    }
+
+    public void setNivelExperiencia(NivelExperiencia nivelExperiencia) {
+        this.nivelExperiencia = nivelExperiencia;
+    }
+
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
@@ -196,6 +215,14 @@ public class Usuario extends AuditableEntity {
         this.perfilPrivado = perfilPrivado;
     }
 
+    public Boolean getOnboardingConcluido() {
+        return onboardingConcluido;
+    }
+
+    public void setOnboardingConcluido(Boolean onboardingConcluido) {
+        this.onboardingConcluido = onboardingConcluido;
+    }
+
     public RoleSistema getRoleSistema() {
         return roleSistema;
     }
@@ -218,5 +245,13 @@ public class Usuario extends AuditableEntity {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public LocalDateTime getUltimoLoginEm() {
+        return ultimoLoginEm;
+    }
+
+    public void setUltimoLoginEm(LocalDateTime ultimoLoginEm) {
+        this.ultimoLoginEm = ultimoLoginEm;
     }
 }

@@ -10,26 +10,30 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL,
     username VARCHAR(50) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
+    senha VARCHAR(255),
     telefone VARCHAR(20),
     bio VARCHAR(500),
     foto_perfil_url VARCHAR(500),
     peso_atual NUMERIC(10, 2),
     altura NUMERIC(10, 2),
-    objetivo VARCHAR(30) NOT NULL,
+    objetivo VARCHAR(30),
+    nivel_experiencia VARCHAR(20),
     data_nascimento DATE,
     cidade VARCHAR(100),
     estado VARCHAR(100),
     perfil_privado BOOLEAN NOT NULL DEFAULT FALSE,
+    onboarding_concluido BOOLEAN NOT NULL DEFAULT FALSE,
     role_sistema VARCHAR(20) NOT NULL DEFAULT 'USUARIO',
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    ultimo_login_em TIMESTAMP,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_usuarios PRIMARY KEY (id),
     CONSTRAINT uk_usuarios_email UNIQUE (email),
     CONSTRAINT uk_usuarios_username UNIQUE (username),
-    CONSTRAINT ck_usuarios_objetivo CHECK (objetivo IN ('GANHO_MASSA', 'DEFINICAO', 'MANUTENCAO', 'EMAGRECIMENTO')),
+    CONSTRAINT ck_usuarios_objetivo CHECK (objetivo IS NULL OR objetivo IN ('GANHO_MASSA', 'DEFINICAO', 'MANUTENCAO', 'EMAGRECIMENTO')),
+    CONSTRAINT ck_usuarios_nivel_experiencia CHECK (nivel_experiencia IS NULL OR nivel_experiencia IN ('INICIANTE', 'INTERMEDIARIO', 'AVANCADO')),
     CONSTRAINT ck_usuarios_role_sistema CHECK (role_sistema IN ('ADMIN', 'GESTOR', 'USUARIO'))
 );
 
@@ -41,6 +45,9 @@ CREATE INDEX IF NOT EXISTS idx_usuarios_role_sistema_ativo
 
 CREATE INDEX IF NOT EXISTS idx_usuarios_data_criacao
     ON usuarios (data_criacao DESC);
+
+CREATE INDEX IF NOT EXISTS idx_usuarios_ultimo_login_em
+    ON usuarios (ultimo_login_em DESC);
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: usuarios dependem de input real.

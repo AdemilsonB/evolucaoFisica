@@ -1,5 +1,9 @@
 package br.com.evolucao.evolucaoFisica.controller;
 
+import br.com.evolucao.evolucaoFisica.dto.AuthResponse;
+import br.com.evolucao.evolucaoFisica.dto.CadastroLocalRequest;
+import br.com.evolucao.evolucaoFisica.dto.LoginGoogleRequest;
+import br.com.evolucao.evolucaoFisica.dto.LoginLocalRequest;
 import br.com.evolucao.evolucaoFisica.dto.UsuarioIdentidadeExternaRequest;
 import br.com.evolucao.evolucaoFisica.dto.UsuarioIdentidadeExternaResponse;
 import br.com.evolucao.evolucaoFisica.enumeration.ProvedorAutenticacao;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/autenticacao/identidades")
+@RequestMapping("/api")
 public class AutenticacaoController {
 
     private final AutenticacaoService autenticacaoService;
@@ -26,18 +30,34 @@ public class AutenticacaoController {
         this.autenticacaoService = autenticacaoService;
     }
 
-    @PostMapping
+    @PostMapping("/auth/cadastro")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AuthResponse cadastrarLocal(@Valid @RequestBody CadastroLocalRequest request) {
+        return autenticacaoService.cadastrarLocal(request);
+    }
+
+    @PostMapping("/auth/login")
+    public AuthResponse loginLocal(@Valid @RequestBody LoginLocalRequest request) {
+        return autenticacaoService.loginLocal(request);
+    }
+
+    @PostMapping("/auth/google")
+    public AuthResponse loginGoogle(@Valid @RequestBody LoginGoogleRequest request) {
+        return autenticacaoService.loginGoogle(request);
+    }
+
+    @PostMapping("/autenticacao/identidades")
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioIdentidadeExternaResponse vincular(@Valid @RequestBody UsuarioIdentidadeExternaRequest request) {
         return autenticacaoService.vincularIdentidadeExterna(request);
     }
 
-    @GetMapping("/usuarios/{usuarioId}")
+    @GetMapping("/autenticacao/identidades/usuarios/{usuarioId}")
     public List<UsuarioIdentidadeExternaResponse> listarPorUsuario(@PathVariable Long usuarioId) {
         return autenticacaoService.listarIdentidadesPorUsuario(usuarioId);
     }
 
-    @GetMapping("/provedores/{provedor}/externos/{identificadorExterno}")
+    @GetMapping("/autenticacao/identidades/provedores/{provedor}/externos/{identificadorExterno}")
     public UsuarioIdentidadeExternaResponse buscarPorIdentidade(
             @PathVariable ProvedorAutenticacao provedor,
             @PathVariable String identificadorExterno
