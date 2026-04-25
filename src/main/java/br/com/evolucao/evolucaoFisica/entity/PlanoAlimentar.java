@@ -10,6 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "planos_alimentares")
 public class PlanoAlimentar extends AuditableEntity {
@@ -33,6 +35,15 @@ public class PlanoAlimentar extends AuditableEntity {
 
     @Column(nullable = false)
     private Boolean publico = Boolean.FALSE;
+
+    @Column(nullable = false)
+    private Boolean principal = Boolean.FALSE;
+
+    @Column(name = "data_inicio")
+    private LocalDate dataInicio;
+
+    @Column(name = "data_fim")
+    private LocalDate dataFim;
 
     public Long getId() {
         return id;
@@ -80,5 +91,29 @@ public class PlanoAlimentar extends AuditableEntity {
 
     public void setPublico(Boolean publico) {
         this.publico = publico;
+    }
+
+    public Boolean getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(Boolean principal) {
+        this.principal = principal;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
     }
 }

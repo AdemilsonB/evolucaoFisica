@@ -3,6 +3,8 @@ package br.com.evolucao.evolucaoFisica.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 public record PlanoAlimentarRequest(
         @NotNull(message = "Usuario e obrigatorio.")
         Long usuarioId,
@@ -10,6 +12,9 @@ public record PlanoAlimentarRequest(
         String nome,
         String descricao,
         Boolean ativo,
-        Boolean publico
+        Boolean publico,
+        Boolean principal,
+        LocalDate dataInicio,
+        LocalDate dataFim
 ) {
 }

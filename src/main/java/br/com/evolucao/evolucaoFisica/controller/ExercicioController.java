@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,15 @@ public class ExercicioController {
     }
 
     @GetMapping
-    public List<ExercicioResponse> listar() {
+    public List<ExercicioResponse> listar(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String grupoMuscular,
+            @RequestParam(required = false) String equipamento,
+            @RequestParam(required = false) Boolean ativo
+    ) {
+        if (nome != null || grupoMuscular != null || equipamento != null || ativo != null) {
+            return exercicioService.buscar(nome, grupoMuscular, equipamento, ativo);
+        }
         return exercicioService.listar();
     }
 

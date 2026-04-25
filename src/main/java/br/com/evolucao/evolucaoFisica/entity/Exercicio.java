@@ -21,8 +21,14 @@ public class Exercicio extends AuditableEntity {
     @Column(name = "grupo_muscular", nullable = false, length = 60)
     private String grupoMuscular;
 
+    @Column(length = 80)
+    private String equipamento;
+
     @Column(length = 500)
     private String descricao;
+
+    @Column(nullable = false)
+    private Boolean ativo = Boolean.TRUE;
 
     public Long getId() {
         return id;
@@ -54,5 +60,21 @@ public class Exercicio extends AuditableEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getEquipamento() {
+        return equipamento;
+    }
+
+    public void setEquipamento(String equipamento) {
+        this.equipamento = equipamento;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }

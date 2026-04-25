@@ -32,6 +32,10 @@ public class RegistroDiario extends AuditableEntity {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plano_alimentar_id")
+    private PlanoAlimentar planoAlimentar;
+
     @Column(name = "data_referencia", nullable = false)
     private LocalDate dataReferencia;
 
@@ -91,6 +95,14 @@ public class RegistroDiario extends AuditableEntity {
 
     public void setDataReferencia(LocalDate dataReferencia) {
         this.dataReferencia = dataReferencia;
+    }
+
+    public PlanoAlimentar getPlanoAlimentar() {
+        return planoAlimentar;
+    }
+
+    public void setPlanoAlimentar(PlanoAlimentar planoAlimentar) {
+        this.planoAlimentar = planoAlimentar;
     }
 
     public Boolean getRealizouTreino() {

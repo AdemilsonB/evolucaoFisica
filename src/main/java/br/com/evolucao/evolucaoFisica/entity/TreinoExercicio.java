@@ -32,6 +32,9 @@ public class TreinoExercicio extends AuditableEntity {
     private Exercicio exercicio;
 
     @Column(nullable = false)
+    private Integer ordem;
+
+    @Column(nullable = false)
     private Integer series;
 
     @Column(nullable = false)
@@ -74,6 +77,14 @@ public class TreinoExercicio extends AuditableEntity {
 
     public void setSeries(Integer series) {
         this.series = series;
+    }
+
+    public Integer getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(Integer ordem) {
+        this.ordem = ordem;
     }
 
     public Integer getRepeticoes() {

@@ -28,10 +28,14 @@ public class RegistroExercicio extends AuditableEntity {
     @JoinColumn(name = "exercicio_id", nullable = false)
     private Exercicio exercicio;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "treino_exercicio_id")
+    private TreinoExercicio treinoExercicio;
+
     @Column(name = "carga_real", precision = 10, scale = 2)
     private BigDecimal cargaReal;
 
-    @Column(name = "repeticoes_real", nullable = false)
+    @Column(name = "repeticoes_real")
     private Integer repeticoesReal;
 
     @Column(nullable = false)
@@ -67,6 +71,14 @@ public class RegistroExercicio extends AuditableEntity {
 
     public void setCargaReal(BigDecimal cargaReal) {
         this.cargaReal = cargaReal;
+    }
+
+    public TreinoExercicio getTreinoExercicio() {
+        return treinoExercicio;
+    }
+
+    public void setTreinoExercicio(TreinoExercicio treinoExercicio) {
+        this.treinoExercicio = treinoExercicio;
     }
 
     public Integer getRepeticoesReal() {

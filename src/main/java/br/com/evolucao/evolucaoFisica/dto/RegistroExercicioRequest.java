@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record RegistroExercicioRequest(
+        Long treinoExercicioId,
         @NotNull(message = "Exercicio e obrigatorio.")
         Long exercicioId,
         BigDecimal cargaReal,

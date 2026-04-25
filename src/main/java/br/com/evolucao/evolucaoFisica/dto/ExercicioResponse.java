@@ -4,6 +4,8 @@ public record ExercicioResponse(
         Long id,
         String nome,
         String grupoMuscular,
-        String descricao
+        String equipamento,
+        String descricao,
+        Boolean ativo
 ) {
 }

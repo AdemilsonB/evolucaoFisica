@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public record RegistroDiarioResponse(
         Long id,
         Long usuarioId,
+        Long planoAlimentarId,
         LocalDate dataReferencia,
         Boolean realizouTreino,
         String tipoTreino,

@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 public record TreinoExercicioRequest(
         @NotNull(message = "Exercicio e obrigatorio.")
         Long exercicioId,
+        @NotNull(message = "A ordem do exercicio e obrigatoria.")
+        Integer ordem,
         @NotNull(message = "Series sao obrigatorias.")
         Integer series,
         @NotNull(message = "Repeticoes sao obrigatorias.")

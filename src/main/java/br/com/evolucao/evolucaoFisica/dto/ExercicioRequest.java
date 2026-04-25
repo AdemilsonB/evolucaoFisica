@@ -7,6 +7,8 @@ public record ExercicioRequest(
         String nome,
         @NotBlank(message = "Grupo muscular e obrigatorio.")
         String grupoMuscular,
-        String descricao
+        String equipamento,
+        String descricao,
+        Boolean ativo
 ) {
 }

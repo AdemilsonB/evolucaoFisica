@@ -19,6 +19,7 @@ import br.com.evolucao.evolucaoFisica.entity.Medalha;
 import br.com.evolucao.evolucaoFisica.entity.MissaoSemanal;
 import br.com.evolucao.evolucaoFisica.entity.Nivel;
 import br.com.evolucao.evolucaoFisica.entity.PerfilGamificacaoUsuario;
+import br.com.evolucao.evolucaoFisica.entity.PlanoAlimentar;
 import br.com.evolucao.evolucaoFisica.entity.RegistroDiario;
 import br.com.evolucao.evolucaoFisica.entity.RegistroTreino;
 import br.com.evolucao.evolucaoFisica.entity.Usuario;
@@ -37,6 +38,7 @@ import br.com.evolucao.evolucaoFisica.repository.MedalhaRepository;
 import br.com.evolucao.evolucaoFisica.repository.MissaoSemanalRepository;
 import br.com.evolucao.evolucaoFisica.repository.NivelRepository;
 import br.com.evolucao.evolucaoFisica.repository.PerfilGamificacaoUsuarioRepository;
+import br.com.evolucao.evolucaoFisica.repository.PlanoAlimentarRepository;
 import br.com.evolucao.evolucaoFisica.repository.RegistroDiarioRepository;
 import br.com.evolucao.evolucaoFisica.repository.RegistroExercicioRepository;
 import br.com.evolucao.evolucaoFisica.repository.RegistroTreinoRepository;
@@ -69,6 +71,7 @@ public class GamificacaoService {
 
     private final UsuarioService usuarioService;
     private final PerfilGamificacaoUsuarioRepository perfilRepository;
+    private final PlanoAlimentarRepository planoAlimentarRepository;
     private final RegistroDiarioRepository registroDiarioRepository;
     private final RegistroTreinoRepository registroTreinoRepository;
     private final XpRegraRepository xpRegraRepository;
@@ -85,6 +88,7 @@ public class GamificacaoService {
     public GamificacaoService(
             UsuarioService usuarioService,
             PerfilGamificacaoUsuarioRepository perfilRepository,
+            PlanoAlimentarRepository planoAlimentarRepository,
             RegistroDiarioRepository registroDiarioRepository,
             RegistroTreinoRepository registroTreinoRepository,
             XpRegraRepository xpRegraRepository,
@@ -100,6 +104,7 @@ public class GamificacaoService {
     ) {
         this.usuarioService = usuarioService;
         this.perfilRepository = perfilRepository;
+        this.planoAlimentarRepository = planoAlimentarRepository;
         this.registroDiarioRepository = registroDiarioRepository;
         this.registroTreinoRepository = registroTreinoRepository;
         this.xpRegraRepository = xpRegraRepository;
@@ -123,6 +128,7 @@ public class GamificacaoService {
                 .orElseGet(RegistroDiario::new);
 
         registro.setUsuario(usuario);
+        registro.setPlanoAlimentar(buscarPlanoAlimentar(request.planoAlimentarId()));
         registro.setDataReferencia(request.dataReferencia());
         registro.setRealizouTreino(Boolean.TRUE.equals(request.realizouTreino()));
         registro.setTipoTreino(request.tipoTreino());
@@ -772,6 +778,7 @@ public class GamificacaoService {
         return new RegistroDiarioResponse(
                 registro.getId(),
                 registro.getUsuario().getId(),
+                registro.getPlanoAlimentar() != null ? registro.getPlanoAlimentar().getId() : null,
                 registro.getDataReferencia(),
                 registro.getRealizouTreino(),
                 registro.getTipoTreino(),
@@ -785,6 +792,14 @@ public class GamificacaoService {
                 registro.getMotivacao(),
                 registro.getObservacao()
         );
+    }
+
+    private PlanoAlimentar buscarPlanoAlimentar(Long planoAlimentarId) {
+        if (planoAlimentarId == null) {
+            return null;
+        }
+        return planoAlimentarRepository.findById(planoAlimentarId)
+                .orElseThrow(() -> new ResourceNotFoundException("Plano alimentar nao encontrado para o registro diario."));
     }
 
     private PerfilGamificacaoResponse toPerfilResponse(PerfilGamificacaoUsuario perfil) {

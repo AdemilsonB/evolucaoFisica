@@ -10,7 +10,7 @@ public record RegistroTreinoRequest(
         @NotNull(message = "Treino e obrigatorio.")
         Long treinoId,
         @NotNull(message = "Data de registro e obrigatoria.")
-        LocalDateTime dataRegistro,
+        LocalDateTime planejadoPara,
         String observacao
 ) {
 }

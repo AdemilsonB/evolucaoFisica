@@ -1,6 +1,8 @@
 package br.com.evolucao.evolucaoFisica.controller;
 
+import br.com.evolucao.evolucaoFisica.dto.AbortarRegistroTreinoRequest;
 import br.com.evolucao.evolucaoFisica.dto.FinalizacaoRegistroTreinoRequest;
+import br.com.evolucao.evolucaoFisica.dto.InicioRegistroTreinoRequest;
 import br.com.evolucao.evolucaoFisica.dto.RegistroExercicioRequest;
 import br.com.evolucao.evolucaoFisica.dto.RegistroExercicioResponse;
 import br.com.evolucao.evolucaoFisica.dto.RegistroTreinoRequest;
@@ -38,6 +40,14 @@ public class RegistroTreinoController {
         return registroTreinoService.iniciarTreino(request);
     }
 
+    @PutMapping("/{id}/inicio")
+    public RegistroTreinoResponse iniciarExecucao(
+            @PathVariable Long id,
+            @Valid @RequestBody InicioRegistroTreinoRequest request
+    ) {
+        return registroTreinoService.iniciarExecucao(id, request);
+    }
+
     @PostMapping("/{id}/execucoes")
     @ResponseStatus(HttpStatus.CREATED)
     public RegistroExercicioResponse registrarExecucao(
@@ -53,6 +63,14 @@ public class RegistroTreinoController {
             @Valid @RequestBody FinalizacaoRegistroTreinoRequest request
     ) {
         return registroTreinoService.finalizarTreino(id, request);
+    }
+
+    @PutMapping("/{id}/aborto")
+    public RegistroTreinoResponse abortar(
+            @PathVariable Long id,
+            @Valid @RequestBody AbortarRegistroTreinoRequest request
+    ) {
+        return registroTreinoService.abortarTreino(id, request);
     }
 
     @GetMapping

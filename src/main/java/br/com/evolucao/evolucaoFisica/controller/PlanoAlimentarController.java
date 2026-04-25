@@ -1,5 +1,6 @@
 package br.com.evolucao.evolucaoFisica.controller;
 
+import br.com.evolucao.evolucaoFisica.dto.ExecucaoPlanoAlimentarDiaResponse;
 import br.com.evolucao.evolucaoFisica.dto.PlanoAlimentarDiaRequest;
 import br.com.evolucao.evolucaoFisica.dto.PlanoAlimentarDiaResponse;
 import br.com.evolucao.evolucaoFisica.dto.PlanoAlimentarRefeicaoAlimentoRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -47,6 +49,11 @@ public class PlanoAlimentarController {
     @GetMapping("/dia-da-semana")
     public List<PlanoAlimentarDiaResponse> listarDiaDaSemana(@RequestParam Long usuarioId, @RequestParam DayOfWeek diaSemana) {
         return planoAlimentarService.listarDiaDaSemana(usuarioId, diaSemana);
+    }
+
+    @GetMapping("/execucao-dia")
+    public ExecucaoPlanoAlimentarDiaResponse consultarExecucaoDia(@RequestParam Long usuarioId, @RequestParam LocalDate dataReferencia) {
+        return planoAlimentarService.consultarExecucaoDia(usuarioId, dataReferencia);
     }
 
     @PostMapping("/{id}/dias")

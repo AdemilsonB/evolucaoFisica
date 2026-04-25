@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public record RegistroDiarioRequest(
         @NotNull(message = "Usuario e obrigatorio.")
         Long usuarioId,
+        Long planoAlimentarId,
         @NotNull(message = "Data de referencia e obrigatoria.")
         LocalDate dataReferencia,
         @NotNull(message = "Indicador de treino e obrigatorio.")

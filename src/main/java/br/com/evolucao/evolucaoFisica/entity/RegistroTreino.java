@@ -1,6 +1,7 @@
 package br.com.evolucao.evolucaoFisica.entity;
 
 import br.com.evolucao.evolucaoFisica.enumeration.MotivacaoRegistro;
+import br.com.evolucao.evolucaoFisica.enumeration.StatusExecucaoTreino;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,8 +35,17 @@ public class RegistroTreino extends AuditableEntity {
     @Column(name = "data_registro", nullable = false)
     private LocalDateTime dataRegistro;
 
+    @Column(name = "planejado_para", nullable = false)
+    private LocalDateTime planejadoPara;
+
+    @Column(name = "iniciado_em")
+    private LocalDateTime iniciadoEm;
+
     @Column(name = "finalizado_em")
     private LocalDateTime finalizadoEm;
+
+    @Column(name = "abortado_em")
+    private LocalDateTime abortadoEm;
 
     @Column(length = 500)
     private String observacao;
@@ -43,6 +53,10 @@ public class RegistroTreino extends AuditableEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private MotivacaoRegistro motivacao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private StatusExecucaoTreino status = StatusExecucaoTreino.PLANEJADO;
 
     @Column(nullable = false)
     private boolean concluido;
@@ -87,6 +101,30 @@ public class RegistroTreino extends AuditableEntity {
         this.finalizadoEm = finalizadoEm;
     }
 
+    public LocalDateTime getPlanejadoPara() {
+        return planejadoPara;
+    }
+
+    public void setPlanejadoPara(LocalDateTime planejadoPara) {
+        this.planejadoPara = planejadoPara;
+    }
+
+    public LocalDateTime getIniciadoEm() {
+        return iniciadoEm;
+    }
+
+    public void setIniciadoEm(LocalDateTime iniciadoEm) {
+        this.iniciadoEm = iniciadoEm;
+    }
+
+    public LocalDateTime getAbortadoEm() {
+        return abortadoEm;
+    }
+
+    public void setAbortadoEm(LocalDateTime abortadoEm) {
+        this.abortadoEm = abortadoEm;
+    }
+
     public String getObservacao() {
         return observacao;
     }
@@ -101,6 +139,14 @@ public class RegistroTreino extends AuditableEntity {
 
     public void setMotivacao(MotivacaoRegistro motivacao) {
         this.motivacao = motivacao;
+    }
+
+    public StatusExecucaoTreino getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusExecucaoTreino status) {
+        this.status = status;
     }
 
     public boolean isConcluido() {

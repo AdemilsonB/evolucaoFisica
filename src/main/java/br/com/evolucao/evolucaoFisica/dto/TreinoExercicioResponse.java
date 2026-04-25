@@ -8,6 +8,7 @@ public record TreinoExercicioResponse(
         Long id,
         Long exercicioId,
         String exercicioNome,
+        Integer ordem,
         Integer series,
         Integer repeticoes,
         BigDecimal carga,

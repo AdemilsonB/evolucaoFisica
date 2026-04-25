@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS planos_alimentares (
     descricao VARCHAR(500),
     ativo BOOLEAN NOT NULL DEFAULT TRUE,
     publico BOOLEAN NOT NULL DEFAULT FALSE,
+    principal BOOLEAN NOT NULL DEFAULT FALSE,
+    data_inicio DATE,
+    data_fim DATE,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_planos_alimentares PRIMARY KEY (id),
@@ -23,6 +26,9 @@ CREATE INDEX IF NOT EXISTS idx_planos_alimentares_usuario
 
 CREATE INDEX IF NOT EXISTS idx_planos_alimentares_publico
     ON planos_alimentares (publico, ativo);
+
+CREATE INDEX IF NOT EXISTS idx_planos_alimentares_usuario_principal
+    ON planos_alimentares (usuario_id, principal, ativo);
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: plano alimentar depende de input real.
