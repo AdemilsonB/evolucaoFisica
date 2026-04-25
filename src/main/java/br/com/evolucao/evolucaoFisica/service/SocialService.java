@@ -16,6 +16,7 @@ import br.com.evolucao.evolucaoFisica.entity.PostagemComentario;
 import br.com.evolucao.evolucaoFisica.entity.PostagemCurtida;
 import br.com.evolucao.evolucaoFisica.entity.Seguidor;
 import br.com.evolucao.evolucaoFisica.entity.Usuario;
+import br.com.evolucao.evolucaoFisica.enumeration.VisibilidadeConteudo;
 import br.com.evolucao.evolucaoFisica.exception.BusinessException;
 import br.com.evolucao.evolucaoFisica.exception.ResourceNotFoundException;
 import br.com.evolucao.evolucaoFisica.repository.GrupoMembroRepository;
@@ -24,6 +25,8 @@ import br.com.evolucao.evolucaoFisica.repository.PostagemComentarioRepository;
 import br.com.evolucao.evolucaoFisica.repository.PostagemCurtidaRepository;
 import br.com.evolucao.evolucaoFisica.repository.PostagemRepository;
 import br.com.evolucao.evolucaoFisica.repository.SeguidorRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,8 @@ import java.util.Set;
 @Service
 @Transactional(readOnly = true)
 public class SocialService {
+
+    private static final Logger log = LoggerFactory.getLogger(SocialService.class);
 
     private final SeguidorRepository seguidorRepository;
     private final GrupoRepository grupoRepository;
@@ -82,7 +87,9 @@ public class SocialService {
         seguidor.setSeguido(seguidoUsuario);
         seguidor.setAtivo(Boolean.TRUE);
 
-        return toResponse(seguidorRepository.save(seguidor));
+        Seguidor salvo = seguidorRepository.save(seguidor);
+        log.info("Relacionamento de seguimento ativado seguidorId={} seguidoId={}", seguidorId, seguidoId);
+        return toResponse(salvo);
     }
 
     public List<SeguidorResponse> listarSeguidores(Long usuarioId) {
@@ -95,6 +102,7 @@ public class SocialService {
 
     @Transactional
     public GrupoResponse criarGrupo(GrupoRequest request) {
+        validarCriacaoGrupo(request);
         Grupo grupo = new Grupo();
         grupo.setNome(request.nome());
         grupo.setDescricao(request.descricao());
@@ -110,11 +118,13 @@ public class SocialService {
         dono.setAtivo(Boolean.TRUE);
         grupoMembroRepository.save(dono);
 
+        log.info("Grupo criado grupoId={} criadorId={}", salvo.getId(), grupo.getCriador().getId());
         return toGrupoResponse(salvo);
     }
 
     @Transactional
     public GrupoMembroResponse adicionarMembro(Long grupoId, GrupoMembroRequest request) {
+        validarGrupoMembro(request);
         Grupo grupo = buscarGrupo(grupoId);
         Usuario usuario = usuarioService.buscarEntidade(request.usuarioId());
 
@@ -124,7 +134,9 @@ public class SocialService {
         membro.setRole(request.role());
         membro.setAtivo(Boolean.TRUE);
 
-        return toGrupoMembroResponse(grupoMembroRepository.save(membro));
+        GrupoMembro salvo = grupoMembroRepository.save(membro);
+        log.info("Membro associado ao grupo grupoId={} usuarioId={}", grupoId, request.usuarioId());
+        return toGrupoMembroResponse(salvo);
     }
 
     public List<GrupoResponse> listarGrupos() {
@@ -133,8 +145,10 @@ public class SocialService {
 
     @Transactional
     public PostagemResponse criarPostagem(PostagemRequest request) {
+        validarCriacaoPostagem(request);
+        Usuario autor = usuarioService.buscarEntidade(request.autorId());
         Postagem postagem = new Postagem();
-        postagem.setAutor(usuarioService.buscarEntidade(request.autorId()));
+        postagem.setAutor(autor);
         postagem.setTipo(request.tipo());
         postagem.setVisibilidade(request.visibilidade());
         postagem.setConteudo(request.conteudo());
@@ -142,22 +156,37 @@ public class SocialService {
         postagem.setAtivo(Boolean.TRUE);
 
         if (request.grupoId() != null) {
-            postagem.setGrupo(buscarGrupo(request.grupoId()));
+            Grupo grupo = buscarGrupo(request.grupoId());
+            if (!isMembroAtivo(grupo.getId(), autor.getId())) {
+                throw new BusinessException("Somente membros ativos podem publicar no grupo informado.");
+            }
+            postagem.setGrupo(grupo);
         }
         if (request.registroTreinoId() != null) {
-            postagem.setRegistroTreino(registroTreinoService.buscarEntidadeInterna(request.registroTreinoId()));
+            var registroTreino = registroTreinoService.buscarEntidadeInterna(request.registroTreinoId());
+            if (!registroTreino.getUsuario().getId().equals(autor.getId())) {
+                throw new BusinessException("O registro de treino informado nao pertence ao autor da postagem.");
+            }
+            postagem.setRegistroTreino(registroTreino);
         }
         if (request.evolucaoFisicaId() != null) {
-            postagem.setEvolucaoFisica(evolucaoFisicaService.buscarEntidadeInterna(request.evolucaoFisicaId()));
+            var evolucao = evolucaoFisicaService.buscarEntidadeInterna(request.evolucaoFisicaId());
+            if (!evolucao.getUsuario().getId().equals(autor.getId())) {
+                throw new BusinessException("A evolucao fisica informada nao pertence ao autor da postagem.");
+            }
+            postagem.setEvolucaoFisica(evolucao);
         }
 
-        return toPostagemResponse(postagemRepository.save(postagem));
+        Postagem salva = postagemRepository.save(postagem);
+        log.info("Postagem criada postagemId={} autorId={}", salva.getId(), autor.getId());
+        return toPostagemResponse(salva);
     }
 
     @Transactional
     public void curtirPostagem(Long postagemId, Long usuarioId) {
         Postagem postagem = buscarPostagem(postagemId);
         Usuario usuario = usuarioService.buscarEntidade(usuarioId);
+        validarAcessoPostagem(postagem, usuarioId);
 
         if (postagemCurtidaRepository.findByPostagemIdAndUsuarioId(postagemId, usuarioId).isPresent()) {
             return;
@@ -167,16 +196,27 @@ public class SocialService {
         curtida.setPostagem(postagem);
         curtida.setUsuario(usuario);
         postagemCurtidaRepository.save(curtida);
+        log.info("Postagem curtida postagemId={} usuarioId={}", postagemId, usuarioId);
     }
 
     @Transactional
     public PostagemComentarioResponse comentar(Long postagemId, PostagemComentarioRequest request) {
+        if (request == null) {
+            throw new BusinessException("Os dados do comentario precisam ser informados.");
+        }
+        if (request.conteudo() == null || request.conteudo().isBlank()) {
+            throw new BusinessException("O comentario precisa ter conteudo.");
+        }
+        Postagem postagem = buscarPostagem(postagemId);
+        validarAcessoPostagem(postagem, request.autorId());
         PostagemComentario comentario = new PostagemComentario();
-        comentario.setPostagem(buscarPostagem(postagemId));
+        comentario.setPostagem(postagem);
         comentario.setAutor(usuarioService.buscarEntidade(request.autorId()));
         comentario.setConteudo(request.conteudo());
         comentario.setAtivo(Boolean.TRUE);
-        return toComentarioResponse(postagemComentarioRepository.save(comentario));
+        PostagemComentario salvo = postagemComentarioRepository.save(comentario);
+        log.info("Comentario criado postagemId={} autorId={}", postagemId, request.autorId());
+        return toComentarioResponse(salvo);
     }
 
     public List<PostagemResponse> listarPostagensUsuario(Long usuarioId) {
@@ -184,6 +224,7 @@ public class SocialService {
     }
 
     public List<PostagemResponse> listarFeed(Long usuarioId) {
+        usuarioService.buscarEntidade(usuarioId);
         Set<Long> autores = new LinkedHashSet<>();
         autores.add(usuarioId);
         seguidorRepository.findAllBySeguidorIdAndAtivoTrue(usuarioId).forEach(item -> autores.add(item.getSeguido().getId()));
@@ -194,9 +235,79 @@ public class SocialService {
 
         return postagens.stream()
                 .distinct()
+                .filter(postagem -> podeVisualizarPostagem(postagem, usuarioId))
                 .sorted((a, b) -> b.getCriadoEm().compareTo(a.getCriadoEm()))
                 .map(this::toPostagemResponse)
                 .toList();
+    }
+
+    private void validarCriacaoGrupo(GrupoRequest request) {
+        if (request == null) {
+            throw new BusinessException("Os dados do grupo precisam ser informados.");
+        }
+        if (request.nome() == null || request.nome().isBlank()) {
+            throw new BusinessException("O nome do grupo e obrigatorio.");
+        }
+        if (request.visibilidade() == null) {
+            throw new BusinessException("A visibilidade do grupo precisa ser informada.");
+        }
+    }
+
+    private void validarGrupoMembro(GrupoMembroRequest request) {
+        if (request == null) {
+            throw new BusinessException("Os dados do membro do grupo precisam ser informados.");
+        }
+        if (request.usuarioId() == null) {
+            throw new BusinessException("O usuario do grupo precisa ser informado.");
+        }
+        if (request.role() == null) {
+            throw new BusinessException("O papel do membro precisa ser informado.");
+        }
+    }
+
+    private void validarCriacaoPostagem(PostagemRequest request) {
+        if (request == null) {
+            throw new BusinessException("Os dados da postagem precisam ser informados.");
+        }
+        if ((request.conteudo() == null || request.conteudo().isBlank()) && (request.midiaUrl() == null || request.midiaUrl().isBlank())) {
+            throw new BusinessException("A postagem precisa ter conteudo textual ou midia.");
+        }
+        if (request.visibilidade() == VisibilidadeConteudo.GRUPO && request.grupoId() == null) {
+            throw new BusinessException("Postagens com visibilidade de grupo precisam informar o grupo.");
+        }
+        if (request.grupoId() != null && request.visibilidade() != VisibilidadeConteudo.GRUPO) {
+            throw new BusinessException("Ao informar grupo, a visibilidade da postagem deve ser GRUPO.");
+        }
+    }
+
+    private void validarAcessoPostagem(Postagem postagem, Long usuarioId) {
+        if (!podeVisualizarPostagem(postagem, usuarioId)) {
+            throw new BusinessException("O usuario nao possui permissao para interagir com esta postagem.");
+        }
+    }
+
+    private boolean podeVisualizarPostagem(Postagem postagem, Long usuarioId) {
+        if (postagem.getAutor().getId().equals(usuarioId)) {
+            return true;
+        }
+        return switch (postagem.getVisibilidade()) {
+            case PUBLICA -> true;
+            case PRIVADA -> false;
+            case SEGUIDORES -> isSeguidorAtivo(usuarioId, postagem.getAutor().getId());
+            case GRUPO -> postagem.getGrupo() != null && isMembroAtivo(postagem.getGrupo().getId(), usuarioId);
+        };
+    }
+
+    private boolean isSeguidorAtivo(Long seguidorId, Long seguidoId) {
+        return seguidorRepository.findBySeguidorIdAndSeguidoId(seguidorId, seguidoId)
+                .map(Seguidor::getAtivo)
+                .orElse(Boolean.FALSE);
+    }
+
+    private boolean isMembroAtivo(Long grupoId, Long usuarioId) {
+        return grupoMembroRepository.findByGrupoIdAndUsuarioId(grupoId, usuarioId)
+                .map(GrupoMembro::getAtivo)
+                .orElse(Boolean.FALSE);
     }
 
     private Seguidor toSeguidor(Long seguidorId, Long seguidoId) {

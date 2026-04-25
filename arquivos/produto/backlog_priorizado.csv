@@ -1,0 +1,32 @@
+id,prioridade,modulo,epic,feature,tipo,status_sugerido,dependencias
+P0.1.1,P0,Identidade,Identidade e onboarding,Cadastro e autenticacao local,Essencial,Planejar,
+P0.1.2,P0,Identidade,Identidade e onboarding,Login social Google,Essencial,Planejar,P0.1.1
+P0.1.3,P0,Identidade,Identidade e onboarding,Onboarding do atleta,Essencial,Planejar,P0.1.1
+P0.2.1,P0,Fundacao,Base tecnica,Migracoes formais de banco,Essencial,Planejar,
+P0.2.2,P0,Fundacao,Base tecnica,Observabilidade e seguranca operacional,Essencial,Planejar,P0.2.1
+P1.1.1,P1,Treinos,Biblioteca e montagem,Biblioteca de exercicios,Essencial,Planejar,P0.1.3
+P1.1.2,P1,Treinos,Biblioteca e montagem,Criacao de treino planejado,Essencial,Planejar,P1.1.1
+P1.2.1,P1,Treinos,Execucao real,Iniciar e finalizar treino,Essencial,Em andamento,P1.1.2
+P1.2.2,P1,Treinos,Execucao real,Registrar execucao por exercicio,Essencial,Em andamento,P1.2.1
+P1.2.3,P1,Treinos,Execucao real,Comparativo e progressao real,Implicita crucial,Planejar,P1.2.2
+P1.3.1,P1,Alimentacao,Base nutricional,Base de alimentos,Essencial,Em andamento,P0.1.3
+P1.3.2,P1,Alimentacao,Base nutricional,Plano alimentar semanal,Essencial,Em andamento,P1.3.1
+P1.4.1,P1,Alimentacao,Execucao alimentar,Registro de refeicoes reais,Essencial,Em andamento,P1.3.1
+P1.4.2,P1,Alimentacao,Execucao alimentar,Registro diario consolidado,Essencial,Em andamento,P1.4.1
+P1.5.1,P1,Gamificacao,Motor transacional,XP transacional auditavel,Essencial,Em andamento,P1.2.1
+P1.5.2,P1,Gamificacao,Motor transacional,Nivel tier e dashboard,Essencial,Em andamento,P1.5.1
+P1.5.3,P1,Gamificacao,Motor transacional,Medalhas e missoes semanais,Essencial,Em andamento,P1.5.1
+P2.1.1,P2,Social,Social basico,Seguidores e privacidade,Implicita crucial,Em andamento,P0.1.1
+P2.1.2,P2,Social,Social basico,Feed social com postagens e interacoes,Implicita crucial,Em andamento,P2.1.1
+P2.1.3,P2,Social,Social basico,Grupos e papeis,Implicita crucial,Em andamento,P2.1.1
+P2.2.1,P2,Social,Social mais gamificacao,Ranking por amigos e grupos,Essencial,Em andamento,P1.5.2
+P2.2.2,P2,Social,Social mais gamificacao,Compartilhamento de conquistas,Recomendada,Planejar,P2.1.2
+P2.3.1,P2,Engajamento,Notificacoes,Lembretes de treino e refeicao,Implicita crucial,Planejar,P1.2.1
+P2.3.2,P2,Engajamento,Notificacoes,Lembretes de missoes e streak,Recomendada,Planejar,P1.5.3
+P2.4.1,P2,Analytics,Relatorios pessoais,Consistencia e adesao,Implicita crucial,Planejar,P1.4.2
+P2.4.2,P2,Analytics,Relatorios pessoais,Progresso por exercicio e periodos,Implicita crucial,Planejar,P1.2.3
+P3.1.1,P3,Integracoes,Saude conectada,Google Fit,Recomendada,Backlog,P2.4.1
+P3.1.2,P3,Integracoes,Saude conectada,Apple Health,Recomendada,Backlog,P2.4.1
+P3.1.3,P3,Integracoes,Saude conectada,Wearables,Recomendada,Backlog,P2.4.1
+P3.2.1,P3,Experiencia,Expansao,Modo offline,Recomendada,Backlog,P1.2.1
+P3.2.2,P3,Experiencia,Expansao,Recomendacoes personalizadas,Recomendada,Backlog,P2.4.2
