@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw *)",
+      "Bash(mvn *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(find src -type f -name '*.java')",
+      "Bash(find src -type f -name '*.sql')",
+      "Bash(grep -r * src/)",
+      "Bash(cat *)",
+      "Read(*)",
+      "Write(src/**)",
+      "Write(src/test/**)",
+      "Write(src/main/resources/db/migration/**)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(DROP *)",
+      "Bash(DELETE FROM * WHERE *)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | bash)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_OUTPUT_FILE\" == *.java ]]; then ./mvnw checkstyle:check -q 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"[Claude Code] Executando: $CLAUDE_TOOL_INPUT_COMMAND\""
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "MAVEN_OPTS": "-Xmx512m"
+  }
+}

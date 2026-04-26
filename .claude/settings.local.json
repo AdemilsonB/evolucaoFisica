@@ -1,0 +1,13 @@
+{
+  "_comment": "Este arquivo é pessoal e não deve ser commitado (.gitignore).",
+  "permissions": {
+    "allow": [
+      "Bash(psql *)",
+      "Bash(docker *)"
+    ]
+  },
+  "env": {
+    "DB_URL": "jdbc:postgresql://localhost:5432/evolucao_fisica_dev",
+    "DB_USER": "postgres"
+  }
+}
