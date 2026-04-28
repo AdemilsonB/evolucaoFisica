@@ -32,7 +32,7 @@ public class RegistroTreino extends AuditableEntity {
     @JoinColumn(name = "treino_id", nullable = false)
     private Treino treino;
 
-    @Column(name = "data_registro", nullable = false)
+    @Column(name = "data_registro")
     private LocalDateTime dataRegistro;
 
     @Column(name = "planejado_para", nullable = false)
