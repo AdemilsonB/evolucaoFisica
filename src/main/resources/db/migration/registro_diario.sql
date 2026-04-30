@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS registros_diarios CASCADE;
+
+-- =========================================================
 -- Arquivo: registro_diario.sql
 -- Entidade: RegistroDiario
 -- Tabela: registros_diarios
@@ -44,4 +46,5 @@ CREATE INDEX IF NOT EXISTS idx_registros_diarios_usuario_data_plano
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: registros diarios dependem de input real.
+
 

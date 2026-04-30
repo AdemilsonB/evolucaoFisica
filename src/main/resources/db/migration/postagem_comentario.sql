@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS postagens_comentarios CASCADE;
+
+-- =========================================================
 -- Arquivo: postagem_comentario.sql
 -- Entidade: PostagemComentario
 -- Tabela: postagens_comentarios
@@ -26,4 +28,5 @@ CREATE INDEX IF NOT EXISTS idx_postagens_comentarios_autor_criado_em
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: comentarios dependem de input real.
+
 

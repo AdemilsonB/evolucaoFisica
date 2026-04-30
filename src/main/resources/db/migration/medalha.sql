@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS medalhas CASCADE;
+
+-- =========================================================
 -- Arquivo: medalha.sql
 -- Entidade: Medalha
 -- Tabela: medalhas
@@ -56,4 +58,5 @@ VALUES
     ('Voltei Mais Forte', 'Voltei Mais Forte', 'REPETIVEL', 'RETORNOS_APOS_PAUSA_TOTAL', 1, NULL, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('Subi de nivel', 'Subi de nivel', 'REPETIVEL', 'NIVEIS_SUBIDOS_TOTAL', 1, NULL, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT (nome) DO NOTHING;
+
 

@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS postagens_curtidas CASCADE;
+
+-- =========================================================
 -- Arquivo: postagem_curtida.sql
 -- Entidade: PostagemCurtida
 -- Tabela: postagens_curtidas
@@ -22,4 +24,5 @@ CREATE INDEX IF NOT EXISTS idx_postagens_curtidas_usuario
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: curtidas dependem de evento real.
+
 

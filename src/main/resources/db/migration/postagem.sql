@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS postagens CASCADE;
+
+-- =========================================================
 -- Arquivo: postagem.sql
 -- Entidade: Postagem
 -- Tabela: postagens
@@ -44,4 +46,5 @@ CREATE INDEX IF NOT EXISTS idx_postagens_evolucao_fisica
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: postagens dependem de evento real.
+
 

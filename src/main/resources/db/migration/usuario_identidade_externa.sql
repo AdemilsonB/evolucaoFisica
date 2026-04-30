@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS usuarios_identidades_externas CASCADE;
+
+-- =========================================================
 -- Arquivo: usuario_identidade_externa.sql
 -- Entidade: UsuarioIdentidadeExterna
 -- Tabela: usuarios_identidades_externas
@@ -30,4 +32,5 @@ CREATE INDEX IF NOT EXISTS idx_usuarios_identidades_externas_email
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: identidades externas dependem de vinculacao real.
+
 

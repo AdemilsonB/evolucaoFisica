@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS usuarios_medalhas CASCADE;
+
+-- =========================================================
 -- Arquivo: usuario_medalha.sql
 -- Entidade: UsuarioMedalha
 -- Tabela: usuarios_medalhas
@@ -27,4 +29,5 @@ CREATE INDEX IF NOT EXISTS idx_usuarios_medalhas_medalha
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: concessao depende de evento real.
+
 

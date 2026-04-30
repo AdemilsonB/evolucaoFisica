@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS niveis CASCADE;
+
+-- =========================================================
 -- Arquivo: nivel.sql
 -- Entidade: Nivel
 -- Tabela: niveis
@@ -31,4 +33,5 @@ INSERT INTO niveis (numero, xp_necessario, criado_em, atualizado_em)
 SELECT numero, xp_necessario, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM niveis_seed
 ON CONFLICT (numero) DO NOTHING;
+
 

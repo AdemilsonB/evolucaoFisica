@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS alimentos CASCADE;
+
+-- =========================================================
 -- Arquivo: alimento.sql
 -- Entidade: Alimento
 -- Tabela: alimentos
@@ -26,4 +28,5 @@ CREATE INDEX IF NOT EXISTS idx_alimentos_lower_nome
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: catalogo depende de input real/admin.
+
 

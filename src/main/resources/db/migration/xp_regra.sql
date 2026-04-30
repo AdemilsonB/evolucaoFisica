@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS xp_regras CASCADE;
+
+-- =========================================================
 -- Arquivo: xp_regra.sql
 -- Entidade: XpRegra
 -- Tabela: xp_regras
@@ -47,4 +49,5 @@ VALUES
     ('Registro diario', 'REGISTRO_DIARIO', 10, NULL, TRUE, 'Registro diario', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('Semana completa registrada', 'SEMANA_COMPLETA_REGISTRADA', 50, NULL, TRUE, 'Semana completa registrada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT (tipo_regra) DO NOTHING;
+
 

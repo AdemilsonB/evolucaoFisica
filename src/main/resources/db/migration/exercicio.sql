@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS exercicios CASCADE;
+
+-- =========================================================
 -- Arquivo: exercicio.sql
 -- Entidade: Exercicio
 -- Tabela: exercicios
@@ -17,6 +19,8 @@ CREATE TABLE IF NOT EXISTS exercicios (
     CONSTRAINT pk_exercicios PRIMARY KEY (id)
 );
 
+ALTER TABLE exercicios ADD COLUMN ativo BOOLEAN NOT NULL DEFAULT TRUE;
+
 CREATE INDEX IF NOT EXISTS idx_exercicios_nome
     ON exercicios (nome);
 
@@ -31,4 +35,5 @@ CREATE INDEX IF NOT EXISTS idx_exercicios_equipamento
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: exercicios dependem de input real/admin.
+
 

@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS usuarios_missoes_semanais CASCADE;
+
+-- =========================================================
 -- Arquivo: usuario_missao_semanal.sql
 -- Entidade: UsuarioMissaoSemanal
 -- Tabela: usuarios_missoes_semanais
@@ -32,4 +34,5 @@ CREATE INDEX IF NOT EXISTS idx_usuarios_missoes_semanais_concluida
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: progresso semanal depende de evento real.
+
 

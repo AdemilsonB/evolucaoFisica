@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS planos_alimentares CASCADE;
+
+-- =========================================================
 -- Arquivo: plano_alimentar.sql
 -- Entidade: PlanoAlimentar
 -- Tabela: planos_alimentares
@@ -32,4 +34,5 @@ CREATE INDEX IF NOT EXISTS idx_planos_alimentares_usuario_principal
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: plano alimentar depende de input real.
+
 

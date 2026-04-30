@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS planos_alimentares_dias CASCADE;
+
+-- =========================================================
 -- Arquivo: plano_alimentar_dia.sql
 -- Entidade: PlanoAlimentarDia
 -- Tabela: planos_alimentares_dias
@@ -24,4 +26,5 @@ CREATE INDEX IF NOT EXISTS idx_planos_alimentares_dias_plano_dia
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: dias do plano dependem de input real.
+
 

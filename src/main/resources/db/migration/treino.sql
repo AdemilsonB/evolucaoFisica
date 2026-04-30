@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS treinos CASCADE;
+
+-- =========================================================
 -- Arquivo: treino.sql
 -- Entidade: Treino
 -- Tabela: treinos
@@ -35,4 +37,5 @@ CREATE INDEX IF NOT EXISTS idx_treinos_usuario_ativo
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: treinos dependem de input real.
+
 

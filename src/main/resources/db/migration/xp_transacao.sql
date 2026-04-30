@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS xp_transacoes CASCADE;
+
+-- =========================================================
 -- Arquivo: xp_transacao.sql
 -- Entidade: XpTransacao
 -- Tabela: xp_transacoes
@@ -38,4 +40,5 @@ CREATE INDEX IF NOT EXISTS idx_xp_transacoes_registro_treino
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: historico de XP depende de evento real persistido.
+
 

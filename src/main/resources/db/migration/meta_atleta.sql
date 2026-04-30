@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS metas_atletas CASCADE;
+
+-- =========================================================
 -- Arquivo: meta_atleta.sql
 -- Entidade: MetaAtleta
 -- Tabela: metas_atletas
@@ -21,4 +23,5 @@ CREATE TABLE IF NOT EXISTS metas_atletas (
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: metas dependem de input real do atleta.
+
 

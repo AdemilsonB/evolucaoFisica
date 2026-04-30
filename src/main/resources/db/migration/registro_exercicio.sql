@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS registro_exercicios CASCADE;
+
+-- =========================================================
 -- Arquivo: registro_exercicio.sql
 -- Entidade: RegistroExercicio
 -- Tabela: registro_exercicios
@@ -33,4 +35,5 @@ CREATE UNIQUE INDEX IF NOT EXISTS uk_registro_exercicios_registro_treino_exercic
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: execucao depende de evento real.
+
 

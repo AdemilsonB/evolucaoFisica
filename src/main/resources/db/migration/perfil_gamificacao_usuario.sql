@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS perfis_gamificacao_usuarios CASCADE;
+
+-- =========================================================
 -- Arquivo: perfil_gamificacao_usuario.sql
 -- Entidade: PerfilGamificacaoUsuario
 -- Tabela: perfis_gamificacao_usuarios
@@ -41,3 +43,4 @@ CREATE INDEX IF NOT EXISTS idx_perfis_gamificacao_tier
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: perfil e criado a partir de usuario real.
+

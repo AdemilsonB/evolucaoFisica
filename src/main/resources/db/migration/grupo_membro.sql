@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS grupos_membros CASCADE;
+
+-- =========================================================
 -- Arquivo: grupo_membro.sql
 -- Entidade: GrupoMembro
 -- Tabela: grupos_membros
@@ -28,4 +30,5 @@ CREATE INDEX IF NOT EXISTS idx_grupos_membros_grupo_ativo
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: vinculo depende de evento real do usuario.
+
 

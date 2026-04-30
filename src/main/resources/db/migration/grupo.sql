@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS grupos CASCADE;
+
+-- =========================================================
 -- Arquivo: grupo.sql
 -- Entidade: Grupo
 -- Tabela: grupos
@@ -30,4 +32,5 @@ CREATE INDEX IF NOT EXISTS idx_grupos_nome
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: grupos dependem de input real do usuario.
+
 

@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS usuarios CASCADE;
+
+-- =========================================================
 -- Arquivo: usuario.sql
 -- Entidade: Usuario
 -- Tabela: usuarios
@@ -51,4 +53,5 @@ CREATE INDEX IF NOT EXISTS idx_usuarios_ultimo_login_em
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: usuarios dependem de input real.
+
 

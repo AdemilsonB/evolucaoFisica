@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS seguidores CASCADE;
+
+-- =========================================================
 -- Arquivo: seguidor.sql
 -- Entidade: Seguidor
 -- Tabela: seguidores
@@ -26,4 +28,5 @@ CREATE INDEX IF NOT EXISTS idx_seguidores_seguido_ativo
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: relacionamentos sociais dependem de evento real.
+
 

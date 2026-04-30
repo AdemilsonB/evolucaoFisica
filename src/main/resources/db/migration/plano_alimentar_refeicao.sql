@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS planos_alimentares_refeicoes CASCADE;
+
+-- =========================================================
 -- Arquivo: plano_alimentar_refeicao.sql
 -- Entidade: PlanoAlimentarRefeicao
 -- Tabela: planos_alimentares_refeicoes
@@ -28,4 +30,5 @@ CREATE INDEX IF NOT EXISTS idx_planos_alimentares_refeicoes_dia_tipo
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: refeicoes do plano dependem de input real.
+
 

@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS refeicao_alimentos CASCADE;
+
+-- =========================================================
 -- Arquivo: refeicao_alimento.sql
 -- Entidade: RefeicaoAlimento
 -- Tabela: refeicao_alimentos
@@ -25,4 +27,5 @@ CREATE INDEX IF NOT EXISTS idx_refeicao_alimentos_alimento
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: composicao da refeicao depende de input real.
+
 

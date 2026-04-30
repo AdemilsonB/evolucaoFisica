@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS refeicoes CASCADE;
+
+-- =========================================================
 -- Arquivo: refeicao.sql
 -- Entidade: Refeicao
 -- Tabela: refeicoes
@@ -30,4 +32,5 @@ CREATE INDEX IF NOT EXISTS idx_refeicoes_usuario_tipo_data
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: refeicoes dependem de input real.
+
 

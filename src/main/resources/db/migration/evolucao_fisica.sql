@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS evolucoes_fisicas CASCADE;
+
+-- =========================================================
 -- Arquivo: evolucao_fisica.sql
 -- Entidade: EvolucaoFisica
 -- Tabela: evolucoes_fisicas
@@ -23,4 +25,5 @@ CREATE INDEX IF NOT EXISTS idx_evolucoes_fisicas_usuario_data
 
 -- Carga inicial
 -- Nenhuma carga inicial obrigatoria: evolucao fisica depende de input real.
+
 

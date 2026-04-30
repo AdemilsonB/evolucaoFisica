@@ -1,4 +1,6 @@
-﻿-- =========================================================
+﻿DROP TABLE IF EXISTS missoes_semanais CASCADE;
+
+-- =========================================================
 -- Arquivo: missao_semanal.sql
 -- Entidade: MissaoSemanal
 -- Tabela: missoes_semanais
@@ -45,4 +47,5 @@ VALUES
     ('Dormir 7-8 horas', 'Dormir 7-8 horas', 'SONO_CONSISTENTE_SEMANA', 5, 80, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('Registrar o dia', 'Registrar o dia', 'REGISTROS_SEMANA', 5, 50, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT (nome) DO NOTHING;
+
 
